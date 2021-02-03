@@ -5,7 +5,9 @@ const {
   googleLogin,
   googleRedirect,
   facebookLogin,
-  facebookRedirect
+  facebookRedirect,
+  githubLogin,
+  githubRedirect
 } = require('../../controllers/users');
 
 router.post('/register', createUser);
@@ -14,5 +16,7 @@ router.get('/google', googleLogin);
 router.get('/google/callback', googleRedirect);
 router.get('/facebook', facebookLogin);
 router.get('/facebook/redirect', facebookRedirect);
+router.get('/github', githubLogin);
+router.get('/github/redirect', githubRedirect);
 
 module.exports = router;

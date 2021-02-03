@@ -3,7 +3,8 @@ const passport = require('passport'),
   User = require('../db/models/user'),
   ExtractJwt = require('passport-jwt').ExtractJwt,
   GoogleStrategy = require('passport-google-oauth20').Strategy,
-  FacebookStrategy = require('passport-facebook');
+  FacebookStrategy = require('passport-facebook').Strategy,
+  GitHubStrategy = require('passport-github').Strategy;
 
 let jwtOptions = {
   jwtFromRequest: (req) => {
@@ -58,6 +59,31 @@ passport.use(
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: `${process.env.BACKEND_URL}/auth/facebook/redirect`
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const user = await User.findOne({ uid: profile.id });
+      if (user) {
+        await user.generateAuthToken();
+        return done(null, user);
+      } else {
+        const newUser = new User({
+          name: profile.displayName,
+          uid: profile.id
+        });
+        await newUser.generateAuthToken();
+        return done(null, newUser);
+      }
+    }
+  )
+);
+
+//Github Strategy
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: `${process.env.BACKEND_URL}/auth/github/redirect`
     },
     async (accessToken, refreshToken, profile, done) => {
       const user = await User.findOne({ uid: profile.id });

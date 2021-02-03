@@ -28,6 +28,13 @@ app.use(
     session: false
   })
 );
+app.use(
+  '/auth/github',
+  passport.authenticate('github', {
+    scope: ['email', 'profile'],
+    session: false
+  })
+);
 app.use('/auth', openRoutes);
 
 //  Authenticated  Routes

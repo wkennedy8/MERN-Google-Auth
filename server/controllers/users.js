@@ -79,6 +79,22 @@ exports.facebookRedirect = async (req, res, err) => {
 };
 
 // ***********************************************//
+// Facebook Login a user
+// ***********************************************//
+
+exports.githubLogin = async (req, res) => {
+  passport.authenticate('github', { scope: ['profile', 'email'] });
+};
+
+exports.githubRedirect = async (req, res, err) => {
+  res.cookie('jwt', req.user.tokens[0].token, {
+    httpOnly: true,
+    sameSite: 'Strict',
+    secure: process.env.NODE_ENV !== 'production' ? false : true
+  });
+  res.redirect(process.env.CLIENT_URL);
+};
+// ***********************************************//
 // Logout User
 // ***********************************************//
 
