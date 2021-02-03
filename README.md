@@ -1,9 +1,5 @@
-# MERN-Google-Auth
-Practice Google Auth w/ Passport
-
-
-### Uses Passport passport-google-oauth20 strategy for Google Auth & JWT strategy for email and password
-
+# MERN-Passport-Auth-Strategies
+Practice different Passport authentication strategies
 
 
 ### Env File
