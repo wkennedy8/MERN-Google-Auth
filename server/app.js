@@ -18,8 +18,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(
-  '/auth/*',
+  '/auth/google',
   passport.authenticate('google', { scope: ['profile'], session: false })
+);
+app.use(
+  '/auth/facebook',
+  passport.authenticate('facebook', {
+    scope: 'email',
+    session: false
+  })
 );
 app.use('/auth', openRoutes);
 

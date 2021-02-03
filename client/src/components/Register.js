@@ -34,6 +34,7 @@ function Register() {
         <button type="submit">Sign In</button>
       </form>
       <a href="http://localhost:8000/auth/google">Sign Up with Google</a>
+      <a href="http://localhost:8000/auth/facebook">Sign Up with Facebook</a>
     </div>
   );
 }

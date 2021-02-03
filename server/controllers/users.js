@@ -62,11 +62,27 @@ exports.googleRedirect = async (req, res, err) => {
 };
 
 // ***********************************************//
+// Facebook Login a user
+// ***********************************************//
+
+exports.facebookLogin = async (req, res) => {
+  passport.authenticate('facebook', { scope: ['profile', 'email'] });
+};
+
+exports.facebookRedirect = async (req, res, err) => {
+  res.cookie('jwt', req.user.tokens[0].token, {
+    httpOnly: true,
+    sameSite: 'Strict',
+    secure: process.env.NODE_ENV !== 'production' ? false : true
+  });
+  res.redirect(process.env.CLIENT_URL);
+};
+
+// ***********************************************//
 // Logout User
 // ***********************************************//
 
 exports.logoutUser = async (req, res) => {
-  console.log(req);
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.cookies.jwt;

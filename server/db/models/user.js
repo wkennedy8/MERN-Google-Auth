@@ -5,9 +5,15 @@ const mongoose = require('mongoose'),
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    uid: {
       type: String,
       unique: true,
+      trim: true,
+      lowercase: true,
+      index: true
+    },
+    name: {
+      type: String,
       trim: true
     },
     email: {
@@ -39,9 +45,6 @@ const userSchema = new mongoose.Schema(
       }
     ],
     avatar: {
-      type: String
-    },
-    googleId: {
       type: String
     },
     followers: [
